@@ -1,0 +1,68 @@
+﻿@model Intertek.WebSite.Models.LogOnModel
+@{
+    Layout = "";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<link href="@Url.Content("~/Content/master.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/css/Validation.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/buttons.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-1.8.3.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<title>Iniciar Sesión</title>
+</head>
+<body>
+
+        
+              @Html.ValidationSummary(false)
+       
+      
+    
+        <br />
+        @using (Html.BeginForm())
+        {
+      
+<div>
+        <div class="contelogin">
+            <div class="loginbase">
+                <div class="conte1">
+                    <div class="conte2">
+                        <div class="bar1">
+                            <div class="log1">
+                                <p>
+                                    <strong>Usuario:</strong></p>
+                            </div>
+                            <div class="log2">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "bordeimputlogin", @style = "width:240px; height:25px;" })<br />
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </div>
+                        </div>
+                        <div class="bar1">
+                            <div class="log1">
+                                <p>
+                                    <strong>Password:</strong></p>
+                            </div>
+                            <div class="log2">
+                                @Html.PasswordFor(m => m.Password, new { @class = "bordeimputlogin", @style = "width:240px; height:25px;" })<br />
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="bar2">
+                            <div class="cuadrologin">
+                                <input type="submit" value="Iniciar Sesión" class="btnlogin" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+        }
+
+</body>

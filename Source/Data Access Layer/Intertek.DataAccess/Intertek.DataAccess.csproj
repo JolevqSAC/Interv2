@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{96C5907A-43C8-45E8-9E87-CBC8D72F412B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Intertek.DataAccess</RootNamespace>
+    <AssemblyName>Intertek.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libreria\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libreria\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libreria\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libreria\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libreria\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Implementations\AreaRepository.cs" />
+    <Compile Include="Implementations\CargoRepository.cs" />
+    <Compile Include="Implementations\CategoriaProductoRepository.cs" />
+    <Compile Include="Implementations\CentroCostoRepository.cs" />
+    <Compile Include="Implementations\ClienteRepository.cs" />
+    <Compile Include="Implementations\ComentarioRepository.cs" />
+    <Compile Include="Implementations\ContactoClienteRepository.cs" />
+    <Compile Include="Implementations\ContratoRepository.cs" />
+    <Compile Include="Implementations\DepartamentoRepository.cs" />
+    <Compile Include="Implementations\DireccionClienteRepository.cs" />
+    <Compile Include="Implementations\DistritoRepository.cs" />
+    <Compile Include="Implementations\EnsayoRepository.cs" />
+    <Compile Include="Implementations\LaboratorioRepository.cs" />
+    <Compile Include="Implementations\MetodoRepository.cs" />
+    <Compile Include="Implementations\NormaMuestreoRepository.cs" />
+    <Compile Include="Implementations\NormaRequisitoRepository.cs" />
+    <Compile Include="Implementations\OpcionSistemaRepository.cs" />
+    <Compile Include="Implementations\ProductoRepository.cs" />
+    <Compile Include="Implementations\ProvinciaRepository.cs" />
+    <Compile Include="Implementations\RolOpcionSistemaRepository.cs" />
+    <Compile Include="Implementations\ServicioRepository.cs" />
+    <Compile Include="Implementations\TrabajadorRepository.cs" />
+    <Compile Include="Implementations\PaisRepository.cs" />
+    <Compile Include="Implementations\UnidadMedidaRepository.cs" />
+    <Compile Include="Implementations\UsuarioRepository.cs" />
+    <Compile Include="Interfaces\IAreaRepository.cs" />
+    <Compile Include="Interfaces\ICargoRepository.cs" />
+    <Compile Include="Interfaces\ICategoriaProductoRepository.cs" />
+    <Compile Include="Interfaces\ICentroCostoRepository.cs" />
+    <Compile Include="Interfaces\IClienteRepository.cs" />
+    <Compile Include="Interfaces\IComentarioRepository.cs" />
+    <Compile Include="Interfaces\IContactoClienteRepository.cs" />
+    <Compile Include="Interfaces\IContratoRepository.cs" />
+    <Compile Include="Interfaces\IDepartamentoRepository.cs" />
+    <Compile Include="Interfaces\IDirecionClienteRepository.cs" />
+    <Compile Include="Interfaces\IDistritoRepository.cs" />
+    <Compile Include="Interfaces\IEnsayoRepository.cs" />
+    <Compile Include="Interfaces\ILaboratorioRepository.cs" />
+    <Compile Include="Interfaces\IMetodoRepository.cs" />
+    <Compile Include="Interfaces\INormaMuestreoRepository.cs" />
+    <Compile Include="Interfaces\INormaRequisitoRepository.cs" />
+    <Compile Include="Interfaces\IOpcionSistemaRepository.cs" />
+    <Compile Include="Interfaces\IProductoRepository.cs" />
+    <Compile Include="Interfaces\IProvinciaRepository.cs" />
+    <Compile Include="Interfaces\IRolOpcionSistemaRepository.cs" />
+    <Compile Include="Interfaces\IServicioRepository.cs" />
+    <Compile Include="Interfaces\ITrabajadorRepository.cs" />
+    <Compile Include="Interfaces\IUnidadMedidaRepository.cs" />
+    <Compile Include="Interfaces\IUsuarioRepository.cs" />
+    <Compile Include="Interfaces\IPaisRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Business Layer\Intertek.Business.Entity\Intertek.Business.Entity.csproj">
+      <Project>{EFECC60A-0325-4085-8C99-EC65876BBDD5}</Project>
+      <Name>Intertek.Business.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

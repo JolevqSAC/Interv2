@@ -1,0 +1,347 @@
+﻿@using Intertek.Business.Entity
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/CRM2/site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/CRM2/controls.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/CRM2/typography.css")" rel="stylesheet" type="text/css" />
+    @*<link href="@Url.Content("~/Content/themes/ui-lightness/jquery-ui-1.9.2.custom.css")" rel="stylesheet" type="text/css" />*@
+    <link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.8.21.custom.css")" rel="stylesheet" type="text/css" />
+    
+    <link href="@Url.Content("~/Content/CRM2/images/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
+    @RenderSection("HeaderContent", false)
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.9.2.custom.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.blockUI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.pngFix.pack.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/json2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/JSLINQ.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Intertek.js")" type="text/javascript"></script>
+    @RenderSection("ScriptContent", false)
+</head>
+<body>
+    <img src="@Url.Content("~/Content/Themes/images/loading.gif")" alt="Exporting" id="imgExporting" style="display:none"/>
+    @{
+
+        var usuario = (Usuario)Session[Constantes.Usuario];
+
+    }
+    @if (usuario == null)
+    {
+        <script type="text/javascript">
+            alert("La sesión terminó");
+            window.location = '@string.Format("{0}Account/LogOn", @Utils.AbsoluteWebRoot)';
+        </script>
+    }
+    <div class="page">
+        <div class="headercolor">
+            <div class="header">
+                <div class="headertitle">
+                    <img src="@Url.Content("~/Content/img/logointertek.png")" alt="Logo" id="logointertek" />
+                </div>
+                <div class="headerSignIn">
+                    @Html.Partial("LogOnPartialHome")
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        <div class="toolbar" style="padding-top: 5px;">
+            <div class="clear">
+            </div>
+        </div>
+        <div class="main">
+            <table class="maintable" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td id="TdIzquierdo" class="maintableleft" >
+                        <div class="navpane">
+                            <div class="panel">
+                                <div class="paneltop">
+                                    <h3 id="headlinePanel">
+                                        Panel de Control</h3>
+                                </div>
+                                <div class="panelbody">
+                                </div>
+                                <div class="panelitems">
+                                    <ul>
+                                        @{
+                                            List<Modulo> modulos;
+
+                                            var cultura = ViewData["Cultura"].ToString();
+
+                                            var  xx = ViewData["Cultura2"].ToString();
+                                          
+                                            
+                                            modulos = HtmlHelperExtensions.GetModulos(usuario, cultura);
+                                         
+                                            
+                                             System.Web.HttpContext.Current.Session["Modulo"] = modulos;
+                                            
+                                            foreach (var modulo in modulos)
+                                            {
+
+                                            <li sjoidx="@modulo.IdName" ><a id= "@modulo.IdNameLink" class="itemImageRutas" href="javascript:void(0)" title="@modulo.Nombre">
+                                                @modulo.NombreFormat </a>
+                                                <div style='display: none' id="@modulo.IdNameDiv">
+                                                    <ul>
+                                                        @foreach (var menu in modulo.Menus)
+                                                        {
+                                                            <li id="@menu.IdName"><a href="@string.Format("{0}{1}", @Utils.AbsoluteWebRoot, @menu.Url)" >@menu.NombreActual</a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="maintableright">
+                        <div class="aplication">
+                            <div class="paneltop aplicationheadline">                                
+		                        <div id="eOcultar" style='display:block;'>
+                                    <img src="@Url.Content("~/Content/img/Ocultar.gif")" alt="Ocultar"  style="width: 25px;height: 25px;border: 0px;" onclick="f_ocultarMenu();"/>
+ 		                        </div>
+		                        <div id="eVer" style='display:none;'>
+                                    <img src="@Url.Content("~/Content/img/Mostrar.gif")" alt="Mostrar"  style="width: 25px;height: 25px;border: 0px;" onclick="f_mostrarMenu();"/>
+ 		                        </div>                                
+                            </div>
+                            <div class="aplicationContent" style="padding: 5px; background-color: White">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="footer">
+                            <b class="footerstatus">Intertek Versión 1.0, Todos los derechos reservados</b>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var pageBlocked = false;
+        var dlgElement;
+
+        $(document).ready(function () {
+
+            $(".panelitems ul li").hover(function () {
+                if (!$(this).hasClass("pselected"))
+                    $(this).addClass("phover");
+            }, function () {
+                $(this).removeClass("phover");
+            });
+
+            $(".panelitems ul li").click(function () {
+
+                var idx = $(this).attr("sjoidx");
+                SelecionarItemActual(idx);
+            });
+
+            var setting = getWindowData();
+            var height = setting[1] - 108;
+            var heightpanel = $(window).height() - ($(".panelitems ul:first>li").length) * 32 - 130 - 20;
+            //$(".main").css({ "height": +height + "px" });
+            $(".panelbody").css({ "height": +heightpanel + "px" });
+
+            $(".aplication").css({ "height": +height + "px" });
+            $(".aplicationContent").css({ "height": +height - 27 + "px" });
+            // debugger;
+            var COOKIE_ACTUAL = "PANEL_ACTUAL";
+            var COOKIE_IDX = "PANEL_IDX";
+
+            //Selecciono el item cuaado hay un postback
+            var indicePanelActual = $.cookie(COOKIE_IDX);
+            if (indicePanelActual == null) {
+                SelecionarItemActual("modulo1");
+
+                $("#headlinePanel").html(BuscarTituloActual(""));
+                $(".panelbody").html(BuscarContenidoActual(""));
+            } else {
+                SelecionarItemActual(indicePanelActual);
+                $("#headlinePanel").html($.cookie(COOKIE_ACTUAL));
+                $(".panelbody").html(BuscarContenidoActual(indicePanelActual));
+            }
+
+            $(".panelitems ul li a").click(function () {
+                // debugger;
+                var texto = $(this).attr("title");
+                $.cookie(COOKIE_ACTUAL, texto);
+                $("#headlinePanel").html(texto);
+                var indice = $(this).parent().attr("sjoidx");
+
+                $(".panelitems ul li").each(function () {
+
+                    if ($(this).attr("sjoidx") == indice) {
+                        $(this).addClass("pselectedModulo");
+                    } else {
+                        $(this).removeClass("pselectedModulo");
+                    }
+                });
+
+                $.cookie(COOKIE_IDX, indice);
+
+                //Obteneer la lista interna
+                $(".panelbody").html(BuscarContenidoActual(indice));
+
+            });
+
+            $("#eOcultar").click(function () {
+
+                $("#eOcultar").css("display", "none");
+                $("#TdIzquierdo").css("display", "none");
+                
+                $("#eVer").css( "display","block" );
+
+            });
+
+            $("#eVer").click(function () {
+
+                $("#eOcultar").css("display", "block");
+                $("#TdIzquierdo").css("display", "block");
+
+                $("#eVer").css("display", "none");
+
+            });
+
+
+        });
+
+        jQuery(window).resize(function (evento) {
+
+            $(".panelitems ul li").hover(function () {
+                if (!$(this).hasClass("pselected"))
+                    $(this).addClass("phover");
+            }, function () {
+                $(this).removeClass("phover");
+            });
+
+            $(".panelitems ul li").click(function () {
+                var idx = $(this).attr("sjoidx");
+                SelecionarItemActual(idx);
+            });
+
+            var setting = getWindowData();
+            var height = setting[1] - 108;
+            var heightpanel = $(window).height() - ($(".panelitems ul:first>li").length) * 32 - 130 - 8;
+            //$(".main").css({ "height": +height + "px" });
+            $(".panelbody").css({ "height": +heightpanel + "px" });
+
+            $(".aplication").css({ "height": +height + "px" });
+            $(".aplicationContent").css({ "height": +height - 27 + "px" });
+
+            var COOKIE_ACTUAL = "PANEL_ACTUAL";
+            var COOKIE_IDX = "PANEL_IDX";
+
+            //Selecciono el item cuaado hay un postback
+            var indicePanelActual = $.cookie(COOKIE_IDX);
+            if (indicePanelActual == null) {
+                SelecionarItemActual("modulo1");
+                $("#headlinePanel").html(BuscarTituloActual(""));
+                $(".panelbody").html(BuscarContenidoActual(""));
+            } else {
+
+                $("#headlinePanel").html($.cookie(COOKIE_ACTUAL));
+                $(".panelbody").html(BuscarContenidoActual(indicePanelActual));
+                SelecionarItemActual(indicePanelActual);
+            }
+
+            $(".panelitems ul li a").click(function () {
+
+                var texto = $(this).attr("title");
+                $.cookie(COOKIE_ACTUAL, texto);
+                $("#headlinePanel").html(texto);
+                var indice = $(this).parent().attr("sjoidx");
+                $.cookie(COOKIE_IDX, indice);
+
+                //Obteneer la lista interna
+                $(".panelbody").html(BuscarContenidoActual(indice));
+            });
+        });
+
+        function SelecionarItemActual(index) {
+           //  debugger;
+            $(".panelitems ul li").each(function () {
+                if ($(this).attr("sjoidx") == index)
+                    $(this).addClass("pselectedModulo");
+                else {
+                    $(this).removeClass("pselectedModulo");
+                }
+            });
+
+            Intertek.MenuSelected('@ViewData["idMenu"]'); // para que se quede seleccionado el formulario al q se hizo click
+        }
+
+        function BuscarTituloActual(index) {
+            var txtTemp;
+            $(".panelitems ul li").each(function () {
+                if ($(this).attr("sjoidx") == index) {
+                    txtTemp = $(this).children("a").attr("title");
+                }
+            });
+            return txtTemp;
+        }
+
+        function BuscarContenidoActual(index) {
+            var contentTemp = "<div class='panelbody-subitems'>";
+            $(".panelitems ul li").each(function () {
+                if ($(this).attr("sjoidx") == index) {
+                    var temp = $(this).children("div").html();
+                    if (temp == null) {
+                        temp = "Items no disponibles";
+                    }
+                    contentTemp += temp;
+                }
+            });
+            contentTemp += "</div>";
+            return contentTemp;
+        }
+
+        function changeBaseColor() {
+            var html = document.getElementsByTagName("html")[0];
+            var input = document.getElementsByTagName("input")[0];
+            html.style.scrollbarBaseColor = input.value;
+        }
+
+        function getWindowData() {
+            var widthViewport, heightViewport, xScroll, yScroll, widthTotal, heightTotal;
+            if (typeof window.innerWidth != 'undefined') {
+                widthViewport = window.innerWidth - 17;
+                heightViewport = window.innerHeight - 17;
+            } else if (typeof document.documentElement != 'undefined' && typeof document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) {
+                widthViewport = document.documentElement.clientWidth;
+                heightViewport = document.documentElement.clientHeight;
+            } else {
+                widthViewport = document.getElementsByTagName('body')[0].clientWidth;
+                heightViewport = document.getElementsByTagName('body')[0].clientHeight;
+            }
+            xScroll = self.pageXOffset || (document.documentElement.scrollLeft + document.body.scrollLeft);
+            yScroll = self.pageYOffset || (document.documentElement.scrollTop + document.body.scrollTop);
+            widthTotal = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth, widthViewport);
+            heightTotal = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, heightViewport);
+            return [widthViewport, heightViewport, xScroll, yScroll, widthTotal, heightTotal];
+        }
+
+        function f_mostrarMenu() {
+                $("#eOcultar").css( "display","none" );
+                $("#eVer").css( "display","block" );
+        }
+        function f_ocultarMenu() {
+                $("#eOcultar").css( "display","block" );
+                $("#eVer").css( "display","none" );
+        }
+
+
+    </script>
+    @RenderSection("JavaScript", false)
+</body>
+</html>

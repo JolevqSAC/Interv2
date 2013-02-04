@@ -1,0 +1,19 @@
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[SelectAllJefeLaboratorio]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE [dbo].[SelectAllJefeLaboratorio]
+GO
+
+CREATE PROCEDURE [dbo].[SelectAllJefeLaboratorio]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT
+	[IDJefeLaboratorio],
+	[IDPersonal]
+	FROM [JefeLaboratorio]
+
+	SET NOCOUNT OFF
+END
+
+GO

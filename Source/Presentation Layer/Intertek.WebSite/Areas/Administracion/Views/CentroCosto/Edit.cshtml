@@ -1,0 +1,221 @@
+﻿@model Intertek.Business.Entity.CentroCosto
+@{
+    ViewBag.Title = "CentroCosto";
+    Layout = "~/Views/Shared/_LayoutCrm.cshtml";
+}
+@section HeaderContent {
+    <link href="@Url.Content("~/Content/Themes/notificaciones.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/css/Validation.css")" rel="stylesheet" type="text/css" />
+}
+@section ScriptContent {
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.alphanumeric.pack.js")" type="text/javascript"></script>
+}
+<div class="msgModel" style="display: none">
+    <div class="tips loading">
+        Por favor espere, procesando solicitud...
+    </div>
+    <div class="tips merror">
+    </div>
+    <div class="tips mexito">
+    </div>
+</div>
+@using (Html.BeginForm(Model.Accion, "CentroCosto", new { area = "Administracion" }, FormMethod.Post, new { id = "frmModel" }))
+{
+    ViewContext.FormContext.ValidationSummaryId = "valSumModel";
+    Html.ValidationSummaryJQuery("Errores Encontrados", new Dictionary<string, object> { { "id", "valSumModel" }, { "class", "merror" } });
+    
+    <fieldset class="fieldset-with-legend border-round">
+        <legend class="border-shadow"><span id="idTitulo">Registrar Centros de Costos :</span></legend>
+        <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Nombre")</b>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.CCO_Nombre, new { @class = "inp-form", @style = "width:250px", @onkeypress = "return validLetter(event)", @MaxLength = "50" })
+                    @Html.ValidationMessageFor(model => model.CCO_Nombre)
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Descripcion")</b>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.CCO_Descripcion, new { @class = "inp-form", @style = "width:250px", @onkeypress = "return validLetter(event)", @MaxLength = "100" })
+                    @Html.ValidationMessageFor(model => model.CCO_Descripcion)
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.HiddenFor(model => model.IDCentroCosto)
+                    @Html.HiddenFor(model => model.Accion)
+                </td>
+                <td colspan="3">
+                    <br />
+                    <input type="submit" value="Guardar" id="btnRegistrar" />
+                    <input type="button" value="Regresar" id="btnCancel" onclick="Cancelar()" />
+                    <input type="button" value="Limpiar" id="btnLimpiar" onclick="limpiarControles()" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>    
+}
+<div id='dialog-alert' style="display: none">
+</div>
+<div id='dialog-confirm' style="display: none">
+    ¿Está seguro de realizar esta operación?
+</div>
+<script type="text/javascript">
+
+    var resetFrm = false;
+    $(document).ready(function () {
+
+        // Para validar titulo
+        var idTabla = $('#IDCentroCosto').val();
+        if (idTabla != null && idTabla > 0) {
+            $('#idTitulo').html('');
+            $('#idTitulo').append('Modificar Centros de Costos :');
+        }
+        // fin titulo
+
+        $.cookie("PANEL_IDX", "modulo" + '@Model.IdModulo');
+        $(".panelitems ul li a").trigger("click");
+
+        var validator = $("#frmModel").data('validator');
+        validator.settings.ignore = "";
+        CrearDialogs();
+        $("#dialog-confirm").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 200,
+            width: 280,
+            title: 'alerta',
+            modal: true,
+            open: function () {
+                $(this).parent().appendTo($('#aspnetForm'));
+            },
+            buttons: [
+                        {
+                            text: 'Aceptar',
+                            click: function () {
+                                Guardar();
+                            }
+                        },
+                        {
+                            text: 'Cancelar',
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+        });
+
+        $(".msgModel .tips").hide();
+        $(".msgModel .merror, .msgModel .mexito, .msgModel .loading").css({ "border-top": "none" });
+        $("#frmModel .merror").css({ "border-top": "none", "border-left": "none", "border-right": "none" });
+        $('#btnRegistrar').bind("click", function (e) {
+            if (resetFrm)
+                $(".msgModel .tips").hide();
+            if ($("#frmModel").validate().form()) {
+                $("#dialog-confirm").dialog('open');
+            }
+            e.preventDefault();
+        });
+    });
+
+    function Guardar() {
+        $("#dialog-confirm").dialog('close');
+        InicializarMsg();
+        $.post($("#frmModel").attr("action"), $("#frmModel").serialize(), function (response) {
+            if (response.Success) {
+                $(".msgModel .loading").slideUp(200, function () {
+                    $(".msgModel .mexito").html(response.Message);
+                    Intertek.ShowElement(".msgModel .mexito");
+                    resetFrm = true;
+                });
+                setTimeout('Cancelar()', 2000);
+            } else {
+                $(".msgModel .loading").slideUp(200, function () {
+                    $(".msgModel .merror").html(response.Message);
+                    Intertek.ShowElement(".msgModel .merror");
+                });
+                resetFrm = true;
+            }
+        });
+    }
+
+
+    function InicializarMsg() {
+        $(".msgModel").show();
+        if ($(".msgModel .merror").is(":visible")) {
+            $(".msgModel .merror").slideUp(200, function () {
+                Intertek.ShowElement(".msgModel .loading");
+            });
+        } else
+            Intertek.ShowElement(".msgModel .loading");
+    }
+
+    function Cancelar() {
+
+        window.location = '@Url.Action("Index", "CentroCosto", new { area = "Administracion" })';
+    }
+
+    function CrearDialogs() {
+        var arrayDialog = [{ name: "dialog-alert", height: 100, width: 280, title: "Alerta"}];
+        Intertek.CreateDialogs(arrayDialog);
+    }
+
+    // para validar campos solo numeros
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+        return true;
+    }
+
+    // para validar campos solo letras y espacios
+    function validLetter(e) {
+        var tecla = document.all ? tecla = e.keyCode : tecla = e.which;
+        var especiales = [8, 32, 13]; /*back, space, enter */
+
+        for (var i in especiales) {
+            if (tecla == especiales[i]) {
+                return true; /*break; */
+            }
+        }
+        return (((tecla > 96 && tecla < 123) || (tecla > 64 && tecla < 91)) || tecla == 8);
+    }
+
+    // para validar campos solo letras, numeros y espacios
+    function validLetterNumero(e) {
+        var tecla = document.all ? tecla = e.keyCode : tecla = e.which;
+        var especiales = [8, 32, 13]; /*back, space, enter */
+
+        for (var i in especiales) {
+            if (tecla == especiales[i]) {
+                return true; /*break; */
+            }
+        }
+        return (((tecla > 47 && tecla < 58) || (tecla > 96 && tecla < 123) || (tecla > 64 && tecla < 91)) || tecla == 8);
+    }
+    // para limpiar controles
+    function limpiarControles() {
+        $('#CCO_Nombre').val('');
+        $('#CCO_Descripcion').val('');
+    }
+
+
+</script>

@@ -1,0 +1,452 @@
+﻿@model Intertek.Business.Entity.Trabajador
+@{
+    ViewBag.Title = "Trabajador";
+    Layout = "~/Views/Shared/_LayoutCrm.cshtml";
+}
+@section HeaderContent {
+    <link href="@Url.Content("~/Content/Themes/notificaciones.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/css/Validation.css")" rel="stylesheet" type="text/css" />
+}
+@section ScriptContent {
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/BI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.alphanumeric.pack.js")" type="text/javascript"></script>
+}
+<input type="hidden" name="hdnId" value="0" id="hdnId" />
+<div class="msgModel" style="display: none">
+    <div class="tips loading">
+        Por favor espere, procesando solicitud...
+    </div>
+    <div class="tips merror">
+    </div>
+    <div class="tips mexito">
+    </div>
+</div>
+@using (Html.BeginForm(Model.Accion, "Trabajador", FormMethod.Post, new { id = "frmModel" }))
+{
+    ViewContext.FormContext.ValidationSummaryId = "valSumModel";
+    Html.ValidationSummaryJQuery("Errores Encontrados", new Dictionary<string, object> { { "id", "valSumModel" }, { "class", "merror" } });
+  
+        <fieldset class="fieldset-with-legend border-round">
+        <legend class="border-shadow"><span id="idTitulo">Registrar Trabajador</span></legend>
+        <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Nombres")</b>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.PER_Nombres, new { @class = "inp-form", @style = "width:250px", @MaxLength = "50" })
+                    @Html.ValidationMessageFor(model => model.PER_Nombres)
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Apellido")</b>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.PER_Apellidos, new { @class = "inp-form", @style = "width:250px", @MaxLength = "150" })
+                    @Html.ValidationMessageFor(model => model.PER_Apellidos)
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Direccion")</b>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.PER_Direccion, new { @class = "inp-form", @style = "width:300px", @MaxLength = "150" })
+                    @Html.ValidationMessageFor(model => model.PER_Direccion)
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Dni")</b>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.PER_DNI, new { @class = "inp-form", @style = "width:100px", @onkeypress = "return isNumberKey(event)", @MaxLength = "8" })
+                    @Html.ValidationMessageFor(model => model.PER_DNI)
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Cargo")</b>
+                </td>
+                <td>
+                    @* @Html.TextBoxFor(model => model.IDCargo, new { @class = "inp-form" })
+                    @Html.ValidationMessageFor(model => model.IDCargo)*@
+                    @Html.TextBoxFor(model => model.NombreCargo, new { @class = "inp-form", @style = "width:300px", @MaxLength = "50" })
+                    
+                    &nbsp;&nbsp;
+                    <b>@Html.Resource("Master,IDCargo")</b>
+                    @Html.TextBoxFor(model => model.IDCargo, new { @class = "inp-form", @style = "width:100px", @readonly = "true" })
+                    &nbsp;
+                    @Html.ValidationMessageFor(model => model.NombreCargo)
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+            <tr>
+                <td style="height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <b>@Html.Resource("Master,Ubigeo")&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                </td>
+                <td>
+                    @*INICIO UBIGEO*@
+                    <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+                        <tr>
+                            <td class="right">
+                                @Html.Resource("Master,Pais ")&nbsp;
+                            </td>
+                            <td>
+                                <select id="ddlPais" name="ddlPais">
+                                </select>
+                            </td>
+                            <td class="right">
+                                &nbsp;&nbsp;@Html.Resource("Master,Departamento ")&nbsp;
+                            </td>
+                            <td>
+                                <select id="ddlDepartamento" name="ddlDepartamento">
+                                </select>
+                            </td>
+                            <td class="right">
+                                &nbsp;&nbsp;@Html.Resource("Master,Provincia ")&nbsp;
+                            </td>
+                            <td>
+                                <select id="ddlProvincia" name="ddlProvincia">
+                                </select>
+                            </td>
+                            <td class="right">
+                                &nbsp;&nbsp;@Html.Resource("Master,Distrito ")&nbsp;
+                            </td>
+                            <td>
+                                <select id="ddlDistrito" name="ddlDistrito">
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    @* FIN UBIGEO*@
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+            <tr>
+                <td>
+                    @Html.HiddenFor(model => model.IDPersonal)
+                    @Html.HiddenFor(model => model.Accion)
+                    @Html.HiddenFor(model => model.IDCargo)
+                </td>
+                <td>
+                    <br />
+                    <input type="submit" value="Guardar" id="btnRegistrar" />
+                    <input type="button" value="Regresar" id="btnCancel" onclick="Cancelar()" />
+                    <input type="button" value="Limpiar" id="btnLimpiar" onclick="limpiarControles()" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>    
+}
+<div id='dialog-alert' style="display: none">
+</div>
+<div id='dialog-confirm' style="display: none">
+    ¿Está seguro de realizar esta operación?
+</div>
+<script type="text/javascript">
+
+    var resetFrm = false;
+    $(document).ready(function () {
+
+        //    INICIO UBIGEO
+        BI.LoadDropDownListItems('ddlPais', '@Url.Action("Listar", "Pais")', 0, false, false);
+
+        // Para que seleccione ubigeo en Editar
+        var idPersonal = '@ViewData["IDPersonal"]';
+        if (idPersonal != null && idPersonal > 0) {
+            $('#hdnId').val(idPersonal);
+            // Para validar titulo
+            if (idPersonal != 0) {
+                $('#idTitulo').html('');
+                $('#idTitulo').append('Modificar Trabajador');
+            }
+            // fin titulo
+            detalle($('#hdnId').val());
+        }
+
+
+        $("#ddlPais").change(function () {
+            BI.LoadDropDownListItems('ddlDepartamento', '@Url.Action("Listar", "Departamento")', { idPais: $("#ddlPais").val() });
+
+            if ($("#ddlPais").val() == "0") {
+                jQuery('#ddlDepartamento').attr('disabled', '-1');
+                jQuery('#ddlDepartamento').val('0');
+                jQuery('#ddlProvincia').attr('disabled', '-1');
+                jQuery('#ddlProvincia').val('0');
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+            }
+        });
+        $("#ddlDepartamento").change(function () {
+
+            BI.LoadDropDownListItems('ddlProvincia', '@Url.Action("Listar", "Provincia")', { idDepartamento: $("#ddlDepartamento").val() });
+            if ($("#ddlDepartamento").val() == "0") {
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+                jQuery('#ddlProvincia').attr('disabled', '-1');
+                jQuery('#ddlProvincia').val('0');
+            }
+
+            if ($("#ddlProvincia").val() == "0") {
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+            }
+
+        });
+        $("#ddlProvincia").change(function () {
+            BI.LoadDropDownListItems('ddlDistrito', '@Url.Action("Listar", "Distrito")', { idProvincia: $("#ddlProvincia").val() });
+            if ($("#ddlProvincia").val() == "0") {
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+
+            }
+
+        });
+
+        // FIN UBIGEO
+
+        $.cookie("PANEL_IDX", "modulo" + '@Model.IdModulo');
+        $(".panelitems ul li a").trigger("click");
+
+
+        var validator = $("#frmModel").data('validator');
+        validator.settings.ignore = "";
+        CrearDialogs();
+        $("#dialog-confirm").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 200,
+            width: 280,
+            title: 'alerta',
+            modal: true,
+            open: function () {
+                $(this).parent().appendTo($('#aspnetForm'));
+            },
+            buttons: [
+                        {
+                            text: 'Aceptar',
+                            click: function () {
+                                Guardar();
+                            }
+                        },
+                        {
+                            text: 'Cancelar',
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+        });
+
+        $(".msgModel .tips").hide();
+        $(".msgModel .merror, .msgModel .mexito, .msgModel .loading").css({ "border-top": "none" });
+        $("#frmModel .merror").css({ "border-top": "none", "border-left": "none", "border-right": "none" });
+        $('#btnRegistrar').bind("click", function (e) {
+            if (resetFrm)
+                $(".msgModel .tips").hide();
+            if ($("#frmModel").validate().form()) {
+                $("#dialog-confirm").dialog('open');
+            }
+            e.preventDefault();
+        });
+
+        // Para Cargo
+        $("#NombreCargo").focusout(function () {
+            //            $(this).css("background-color", "#FFAAFF");
+            BuscarIDCargo($(this).val());
+        });
+
+
+    });
+
+
+    function BuscarIDCargo(nombre) {
+        var url = '@Url.Action("BuscarIDCargo", "Trabajador")';
+        var parametros = { nombre: nombre };
+        var resultado = Intertek.Ajax(url, parametros, false);
+
+        if (resultado.Success == true) {
+            $('#IDCargo').val(resultado.Data);
+        }
+    }
+
+    var indicadorArea = '';
+    function Guardar() {
+        
+//        if ($("#ddlPais").val() == "0") {
+//            alert("Debe seleccionar país");
+//            return;
+//        } 
+        
+        $("#dialog-confirm").dialog('close');
+        InicializarMsg();
+        var arrayCampos = {
+            Distrito: { IDDistrito: $("#ddlDistrito").val() },
+
+            Estado: '1'
+        };
+        $.post($("#frmModel").attr("action"), $("#frmModel").serialize() + '&camposJson=' + JSON.stringify(arrayCampos), function (response) {
+
+            if (response.Success) {
+                $(".msgModel .loading").slideUp(200, function () {
+                    $(".msgModel .mexito").html(response.Message);
+                    Intertek.ShowElement(".msgModel .mexito");
+
+                    resetFrm = true; // se habilita 30/01/2013
+                });
+                setTimeout('Cancelar()', 2000); // se habilita 30/01/2013
+            } else {
+                $(".msgModel .loading").slideUp(200, function () {
+                    $(".msgModel .merror").html(response.Message);
+                    Intertek.ShowElement(".msgModel .merror");
+                });
+                resetFrm = true; // se habilita 30/01/2013
+            }
+        });
+    }
+
+    function InicializarMsg() {
+
+        $(".msgModel").show();
+        if ($(".msgModel .merror").is(":visible")) {
+            $(".msgModel .merror").slideUp(200, function() {
+                Intertek.ShowElement(".msgModel .loading");
+            });
+        } else
+            Intertek.ShowElement(".msgModel .loading");
+
+    }
+
+    function Cancelar() {
+
+        window.location = '@Url.Action("Index", "Trabajador", new { area = "Administracion" })';
+    }
+
+    function CrearDialogs() {
+        var arrayDialog = [{ name: "dialog-alert", height: 100, width: 280, title: "Alerta"}];
+        Intertek.CreateDialogs(arrayDialog);
+    }
+
+    //para combo Cargo
+    $(function () {
+        $('#NombreCargo').autocomplete({ source: '/Trabajador/Search' });
+    });
+    
+    // Metodo para que los combos de ubigeo se seleccionen en Editar
+    function detalle(idCleinte) {
+
+        var provi = "";
+        var distri = "";
+        var id = idCleinte;
+        jQuery.ajax({
+            type: 'POST',
+            url: '@Url.Action("Detalle", "Trabajador")',
+            data: ({
+                id: id
+            }),
+            async: false,
+            success: function (data) {
+                if (data.success == true) {
+                    var item = data.item;
+                    if (item != null) {
+
+                        if (item.IDPais > 0 && item.IDPais != null) {
+                            jQuery('#ddlPais').val(item.IDPais)
+                            BI.LoadDropDownListItems('ddlDepartamento', '@Url.Action("Listar", "Departamento")', { idPais: $("#ddlPais").val() });
+                            jQuery('#ddlDepartamento').val(item.IDDepartamento);
+                            BI.LoadDropDownListItems('ddlProvincia', '@Url.Action("Listar", "Provincia")', { idDepartamento: $("#ddlDepartamento").val() });
+                            jQuery('#ddlProvincia').val(item.IDProvincia);
+                            BI.LoadDropDownListItems('ddlDistrito', '@Url.Action("Listar", "Distrito")', { idProvincia: $("#ddlProvincia").val() });
+                            jQuery('#ddlDistrito').val(item.IDDistrito);
+                        }
+                    }
+                }
+            },
+            error: function (data, error) {
+            }
+        });
+
+    }
+
+    // para validar campos solo numeros
+     function isNumberKey(evt) {
+         var charCode = (evt.which) ? evt.which : event.keyCode;
+         if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+         return true;
+     }
+     
+     // para validar campos solo letras y espacios
+     function validLetter(e) {
+         var tecla = document.all ? tecla = e.keyCode : tecla = e.which;
+         var especiales = [8, 9, 32, 13]; /*back, space, enter */
+
+         for (var i in especiales) {
+             if (tecla == especiales[i]) {
+                 return true; /*break; */
+             }
+         }
+         return (((tecla > 96 && tecla < 123) || (tecla > 64 && tecla < 91)) || tecla == 8);
+     }
+     
+     // para validar campos solo letras, numeros y espacios
+     function validLetterNumero(e) {
+         var tecla = document.all ? tecla = e.keyCode : tecla = e.which;
+         var especiales = [8, 32, 13]; /*back, space, enter */
+
+         for (var i in especiales) {
+             if (tecla == especiales[i]) {
+                 return true; /*break; */
+             }
+         }
+         return (((tecla > 47 && tecla < 58) || (tecla > 96 && tecla < 123) || (tecla > 64 && tecla < 91)) || tecla == 8);
+     }
+     
+     function limpiarControles() {
+         $('#PER_Nombres').val('');
+         $('#PER_Apellidos').val('');
+         $('#PER_Direccion').val('');
+         $('#PER_DNI').val('');
+         $('#NombreCargo').val('');
+         $('#IDCargo ').val('0');
+         BI.LoadDropDownListItems('ddlPais', '@Url.Action("Listar", "Pais")', 0, false, false);
+         if ($("#ddlPais").val() == "0") {
+             jQuery('#ddlDepartamento').attr('disabled', '-1');
+             jQuery('#ddlDepartamento').val('0');
+             jQuery('#ddlProvincia').attr('disabled', '-1');
+             jQuery('#ddlProvincia').val('0');
+             jQuery('#ddlDistrito').attr('disabled', '-1');
+             jQuery('#ddlDistrito').val('0');
+         }
+     }
+
+</script>

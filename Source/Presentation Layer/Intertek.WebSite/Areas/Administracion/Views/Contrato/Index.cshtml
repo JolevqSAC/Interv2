@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Contrato";
+    Layout = "~/Views/Shared/_LayoutCrm.cshtml";
+}
+
+@section HeaderContent {
+    <link href="@Url.Content("~/Content/themes/ui-lightness/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
+}
+
+@section ScriptContent {
+    <script src="@Url.Content("~/Scripts/grid.locale-es.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.alphanumeric.pack.js")" type="text/javascript"></script>
+}
+
+<input id="hfIdentificador" type="hidden" /><br />
+<div id="listado" style="padding: 10px; height: 90%; min-height: 400px;">
+    <table id="tabla">
+    </table>
+    <div id="barra">
+    </div>
+</div>
+<div id="informacion" style="padding: 10px; display: none;">
+</div>
+<div id='dialog-alert' style="display: none">
+</div>
+
+ @section JavaScript {
+<script type='text/javascript'>
+    var grilla = 'tabla';
+    $(document).ready(function () {
+
+        $.cookie("PANEL_IDX", "modulo" + '@ViewData["idModulo"]');
+
+        CrearDialogs();
+
+
+        var oldFrom = $.jgrid.from;
+        $.jgrid.from = function (source, initalQuery) {
+            var result = oldFrom(source, initalQuery);
+            var old_toStr = result._toStr;
+            result._toStr = function (s) {
+                return myAccentRemovement(old_toStr(s));
+            };
+            result._getStr = function (s) {
+                var phrase = [];
+                if (this._trim) {
+                    phrase.push("jQuery.trim(");
+                }
+                phrase.push("myAccentRemovement(String(" + s + "))");
+                if (this._trim) {
+                    phrase.push(")");
+                }
+                if (!this._usecase) {
+                    phrase.push(".toLowerCase()");
+                }
+                return phrase.join("");
+            }
+            return result;
+        }
+
+        Listar();
+    });
+
+    function Listar() {
+        var colNames = ['ID', 'Codigo', 'Nombre Cliente', 'Descripción', 'FechaInicio', 'FechaFin'];
+        var colModels = [
+            { name: 'IDContrato', index: 'IDContrato', align: 'center', hidden: true, width: 40, searchoptions: { sopt: ['eq']} },
+            { name: 'CON_Codigo', index: 'CON_Codigo', align: 'left', width: 100, searchoptions: { sopt: ['cn', 'bw']} },
+            { name: 'NombreCliente', index: 'NombreCliente', align: 'left', width: 220, searchoptions: { sopt: ['cn', 'bw']} },
+           { name: 'CON_Descripcion', index: 'CON_Descripcion', align: 'left', width: 300, sorttype: function (cell, obj) {
+               return myAccentRemovement(cell);
+           }, searchoptions: { sopt: ['cn', 'bw']}
+           },
+             { name: 'CON_FechaInico', index: 'CON_FechaInico', align: 'center', width: 120, /*sorttype: 'date',
+               formatter: 'date', */
+                 searchoptions: { sopt: ['fe'],
+                     dataInit: function (elem) {
+                         $(elem).datepicker({ changeYear: true, changeMonth: true, showButtonPanel: true });
+                     } 
+                 }
+             },
+           { name: 'CON_FechaFin', index: 'CON_FechaFin', align: 'center', width: 120, /* sorttype:'date',
+                    formatter:'date',*/
+               formatoptions: { newformat: 'd/m/Y' },
+               searchoptions: { sopt: ['fe'],
+                   dataInit: function (elem) {
+                       $(elem).datepicker({ changeYear: true, changeMonth: true, showButtonPanel: true, dateFormat: "dd/mm/yyyy" });
+                   } 
+               }
+           }
+//            { name: 'NombreEstado', index: 'CON_Estado', align: 'left', width: 100, edittype: 'select', stype: 'select', searchoptions: { sopt: ['eq'], value: 'CON_Estado:All;1:Activo;0:Inactivo'} }
+        ];
+
+        var opciones = { nuevo: true, editar: true, eliminar: false, search: false };
+
+        Intertek.Grilla(grilla, 'barra', 'hfIdentificador', 'auto', 'auto', 'Buscar Contratos', ' @Url.Action("Listar", "Contrato", new { area = "Administracion" })', 'id', colNames, colModels, 'IDContrato', opciones);
+
+        $("#" + grilla).filterToolbar({ searchOnEnter: true, stringResult: true, defaultSearch: "cn" });
+    }
+
+    function CrearDialogs() {
+        var arrayDialog = [{ name: "dialog-alert", height: 100, width: 280, title: "Alerta"}];
+        Intertek.CreateDialogs(arrayDialog);
+    }
+
+    function Nuevo() {
+
+        var url = '@Url.Action("Crear", "Contrato", new { area = "Administracion" })';
+        window.location = url;
+
+    }
+
+    function Editar(rowkey) {
+
+        var url = '@Url.Action("Modificar", "Contrato", new { area = "Administracion" })' + '/' + rowkey;
+        window.location = url;
+
+    }
+
+    function myAccentRemovement(s) {
+        // the s parameter is always string
+        s = s.replace(/[àáâãäå]/gi, 'a');
+        s = s.replace(/[èéêë]/gi, 'e');
+        s = s.replace(/[ìíîï]/gi, 'i');
+        s = s.replace(/[òóôõöø]/gi, 'o');
+        s = s.replace(/[ùúûü]/gi, 'u');
+        s = s.replace(/[ýÿ]/gi, 'y');
+        s = s.replace(/æ/gi, 'ae');
+        s = s.replace(/œ/gi, 'oe');
+        s = s.replace(/ç/gi, 'c');
+        s = s.replace(/š/gi, 's');
+        s = s.replace(/ñ/gi, 'n');
+        s = s.replace(/ž/gi, 'z');
+        return s;
+    }
+</script>
+
+}

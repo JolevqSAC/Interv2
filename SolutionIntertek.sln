@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{10AECD88-B54C-4CF6-88C1-A06536C28A3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libreria", "Libreria", "{4F008E6A-1634-43E9-B61C-AF87FD9DE84E}"
+	ProjectSection(SolutionItems) = preProject
+		Libreria\Common.Logging.dll = Libreria\Common.Logging.dll
+		Libreria\DataAnnotationsExtensions.dll = Libreria\DataAnnotationsExtensions.dll
+		Libreria\Elmah.dll = Libreria\Elmah.dll
+		Libreria\Elmah.Mvc.dll = Libreria\Elmah.Mvc.dll
+		Libreria\EntityFramework.dll = Libreria\EntityFramework.dll
+		Libreria\log4net.dll = Libreria\log4net.dll
+		Libreria\Microsoft.Practices.EnterpriseLibrary.Common.dll = Libreria\Microsoft.Practices.EnterpriseLibrary.Common.dll
+		Libreria\Microsoft.Practices.EnterpriseLibrary.Data.dll = Libreria\Microsoft.Practices.EnterpriseLibrary.Data.dll
+		Libreria\Microsoft.Practices.ServiceLocation.dll = Libreria\Microsoft.Practices.ServiceLocation.dll
+		Libreria\Microsoft.Practices.Unity.dll = Libreria\Microsoft.Practices.Unity.dll
+		Libreria\Microsoft.Practices.Unity.Interception.dll = Libreria\Microsoft.Practices.Unity.Interception.dll
+		Libreria\MvcPaging.dll = Libreria\MvcPaging.dll
+		Libreria\Newtonsoft.Json.dll = Libreria\Newtonsoft.Json.dll
+		Libreria\Palmmedia.Common.dll = Libreria\Palmmedia.Common.dll
+		Libreria\Quartz.dll = Libreria\Quartz.dll
+		Libreria\System.Web.Mvc.dll = Libreria\System.Web.Mvc.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{8AAA87BA-56E5-432F-8D05-20380AE69636}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Layer", "Business Layer", "{1F478056-06A7-497A-9597-595B03CC47FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access Layer", "Data Access Layer", "{5DF0FD1E-CCEA-402C-BFED-AF12C191FDAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation Layer", "Presentation Layer", "{327E940B-159D-4B22-AB90-9616B146E08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intertek.DataAccess", "Source\Data Access Layer\Intertek.DataAccess\Intertek.DataAccess.csproj", "{96C5907A-43C8-45E8-9E87-CBC8D72F412B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intertek.Business.Logic", "Source\Business Layer\Intertek.Business.Logic\Intertek.Business.Logic.csproj", "{0B3F0392-2CCA-438D-BF1B-186ACA03DE21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intertek.Business.Entity", "Source\Business Layer\Intertek.Business.Entity\Intertek.Business.Entity.csproj", "{EFECC60A-0325-4085-8C99-EC65876BBDD5}"
+EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Intertek.Database", "DataBase\Intertek.Database\Intertek.Database.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intertek.WebSite", "Source\Presentation Layer\Intertek.WebSite\Intertek.WebSite.csproj", "{D9853A1C-F164-44A6-B575-C8FD4AE0AB2F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96C5907A-43C8-45E8-9E87-CBC8D72F412B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96C5907A-43C8-45E8-9E87-CBC8D72F412B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96C5907A-43C8-45E8-9E87-CBC8D72F412B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96C5907A-43C8-45E8-9E87-CBC8D72F412B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3F0392-2CCA-438D-BF1B-186ACA03DE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3F0392-2CCA-438D-BF1B-186ACA03DE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3F0392-2CCA-438D-BF1B-186ACA03DE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3F0392-2CCA-438D-BF1B-186ACA03DE21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFECC60A-0325-4085-8C99-EC65876BBDD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFECC60A-0325-4085-8C99-EC65876BBDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFECC60A-0325-4085-8C99-EC65876BBDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFECC60A-0325-4085-8C99-EC65876BBDD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D9853A1C-F164-44A6-B575-C8FD4AE0AB2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9853A1C-F164-44A6-B575-C8FD4AE0AB2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9853A1C-F164-44A6-B575-C8FD4AE0AB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9853A1C-F164-44A6-B575-C8FD4AE0AB2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3} = {10AECD88-B54C-4CF6-88C1-A06536C28A3A}
+		{1F478056-06A7-497A-9597-595B03CC47FF} = {8AAA87BA-56E5-432F-8D05-20380AE69636}
+		{5DF0FD1E-CCEA-402C-BFED-AF12C191FDAF} = {8AAA87BA-56E5-432F-8D05-20380AE69636}
+		{327E940B-159D-4B22-AB90-9616B146E08D} = {8AAA87BA-56E5-432F-8D05-20380AE69636}
+		{0B3F0392-2CCA-438D-BF1B-186ACA03DE21} = {1F478056-06A7-497A-9597-595B03CC47FF}
+		{EFECC60A-0325-4085-8C99-EC65876BBDD5} = {1F478056-06A7-497A-9597-595B03CC47FF}
+		{96C5907A-43C8-45E8-9E87-CBC8D72F412B} = {5DF0FD1E-CCEA-402C-BFED-AF12C191FDAF}
+		{D9853A1C-F164-44A6-B575-C8FD4AE0AB2F} = {327E940B-159D-4B22-AB90-9616B146E08D}
+	EndGlobalSection
+EndGlobal

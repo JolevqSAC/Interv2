@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EFECC60A-0325-4085-8C99-EC65876BBDD5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Intertek.Business.Entity</RootNamespace>
+    <AssemblyName>Intertek.Business.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libreria\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Area.cs" />
+    <Compile Include="Attributes\BooleanRequiredAttribute.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Cargo.cs" />
+    <Compile Include="CategoriaProducto.cs" />
+    <Compile Include="CentroCosto.cs" />
+    <Compile Include="Cliente.cs" />
+    <Compile Include="Comentario.cs" />
+    <Compile Include="Comun.cs" />
+    <Compile Include="Constantes.cs" />
+    <Compile Include="ContactoCliente.cs" />
+    <Compile Include="Contrato.cs" />
+    <Compile Include="Departamento.cs" />
+    <Compile Include="DireccionCliente.cs" />
+    <Compile Include="Distrito.cs" />
+    <Compile Include="Ensayo.cs" />
+    <Compile Include="Enums\TipoArchivo.cs" />
+    <Compile Include="Enums\TipoEstado.cs" />
+    <Compile Include="Enums\TipoIdioma.cs" />
+    <Compile Include="Generics\GenericDouble.cs" />
+    <Compile Include="Generics\IBaseLogic.cs" />
+    <Compile Include="Generics\Singleton.cs" />
+    <Compile Include="Idioma.cs" />
+    <Compile Include="ImageFile.cs" />
+    <Compile Include="Interfaces\IModel.cs" />
+    <Compile Include="JQGrid\Filter.cs" />
+    <Compile Include="JQGrid\GridTable.cs" />
+    <Compile Include="JQGrid\JQgrid.cs" />
+    <Compile Include="JQGrid\ResponseData.cs" />
+    <Compile Include="JQGrid\Row.cs" />
+    <Compile Include="JQGrid\Rule.cs" />
+    <Compile Include="Laboratorio.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="MenuAdmin.cs" />
+    <Compile Include="Metodo.cs" />
+    <Compile Include="Modulo.cs" />
+    <Compile Include="NormaLimite.cs" />
+    <Compile Include="NormaMuestreo.cs" />
+    <Compile Include="NormaRequisito.cs" />
+    <Compile Include="OpcionSistema.cs" />
+    <Compile Include="Pais.cs" />
+    <Compile Include="Producto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provincia.cs" />
+    <Compile Include="Recurso.cs" />
+    <Compile Include="Recursos\Validacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validacion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Respuesta.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="RolOpcionSistema.cs" />
+    <Compile Include="Servicio.cs" />
+    <Compile Include="TipoLaboratorio.cs" />
+    <Compile Include="Trabajador.cs" />
+    <Compile Include="UnidadMedida.cs" />
+    <Compile Include="Usuario.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Recursos\Validacion.en.resx" />
+    <EmbeddedResource Include="Recursos\Validacion.es.resx" />
+    <EmbeddedResource Include="Recursos\Validacion.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validacion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

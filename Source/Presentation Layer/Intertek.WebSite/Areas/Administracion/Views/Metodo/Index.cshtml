@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Metodo";
+    Layout = "~/Views/Shared/_LayoutCrm.cshtml";
+}
+
+@section HeaderContent {
+    <link href="@Url.Content("~/Content/themes/ui-lightness/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
+}
+
+@section ScriptContent {
+    <script src="@Url.Content("~/Scripts/grid.locale-es.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.alphanumeric.pack.js")" type="text/javascript"></script>
+}
+
+<input id="hfIdentificador" type="hidden" /><br />
+<div id="listado" style="padding: 10px; height: 90%; min-height: 400px;">
+    <table id="tabla">
+    </table>
+    <div id="barra">
+    </div>
+</div>
+<div id="informacion" style="padding: 10px; display: none;">
+</div>
+<div id='dialog-alert' style="display: none">
+</div>
+
+ @section JavaScript {
+<script type='text/javascript'>
+    var grilla = 'tabla';
+    $(document).ready(function () {
+
+        $.cookie("PANEL_IDX", "modulo" + '@ViewData["idModulo"]');
+
+        CrearDialogs();
+        Listar();
+    });
+
+    function Listar() {
+        var colNames = ['ID', 'Código', 'Nombre', 'Nombre en Inglés', 'Descripción'];
+        var colModels = [
+            { name: 'IDMetodo', index: 'IDMetodo', align: 'center', hidden: true, width: 40, searchoptions: { sopt: ['eq']} },
+            { name: 'MET_Codigo', index: 'MET_Codigo', align: 'left', width: 100, searchoptions: { sopt: ['cn', 'bw']} },
+            { name: 'MET_Nombre', index: 'MET_Nombre', align: 'left', width: 250, searchoptions: { sopt: ['cn', 'bw']} },
+            { name: 'MET_NombreIngles', index: 'MET_NombreIngles', align: 'left', width: 250, searchoptions: { sopt: ['cn', 'bw']} },
+            { name: 'MET_Descripcion', index: 'MET_Descripcion', align: 'left', width: 300, searchoptions: { sopt: ['cn', 'bw']} }
+        ];
+
+        var opciones = { nuevo: true, editar: true, eliminar: false, search: false };
+
+        Intertek.Grilla(grilla, 'barra', 'hfIdentificador', 'auto', 'auto', 'Buscar Método', ' @Url.Action("Listar", "Metodo", new { area = "Administracion" })', 'id', colNames, colModels, 'IDMetodo', opciones);
+
+        $("#" + grilla).filterToolbar({ searchOnEnter: true, stringResult: true, defaultSearch: "cn" });
+    }
+
+    function CrearDialogs() {
+        var arrayDialog = [{ name: "dialog-alert", height: 100, width: 280, title: "Alerta"}];
+        Intertek.CreateDialogs(arrayDialog);
+    }
+
+    function Nuevo() {
+
+        var url = '@Url.Action("Crear", "Metodo", new { area = "Administracion" })';
+        window.location = url;
+
+    }
+
+    function Editar(rowkey) {
+
+        var url = '@Url.Action("Modificar", "Metodo", new { area = "Administracion" })' + '/' + rowkey;
+        window.location = url;
+
+    }
+
+</script>
+
+}
+

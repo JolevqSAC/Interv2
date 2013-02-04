@@ -1,0 +1,860 @@
+﻿@model Intertek.Business.Entity.Cliente
+@{
+    ViewBag.Title = "Cliente";
+
+    Layout = "~/Views/Shared/_LayoutCrm.cshtml";
+}
+@section HeaderContent {
+    <link href="@Url.Content("~/Content/Themes/notificaciones.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/css/Validation.css")" rel="stylesheet" type="text/css" />
+}
+@section ScriptContent {
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/BI.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.alphanumeric.pack.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/general.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/grid.locale-es.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.alphanumeric.pack.js")" type="text/javascript"></script>
+}
+<input type="hidden" name="hdnId" value="0" id="hdnId" />
+<input type="hidden" name="hdnIdContacto" value="0" id="hdnIdContacto" />
+
+<div class="msgModel" style="display: none">
+    <div class="tips loading">
+        Por favor espere, procesando solicitud...
+    </div>
+    <div class="tips merror">
+    </div>
+    <div class="tips mexito">
+    </div>
+</div>
+@using (Html.BeginForm(Model.Accion, "Cliente", new { area = "Administracion" }, FormMethod.Post, new { id = "frmModel" }))
+{
+    ViewContext.FormContext.ValidationSummaryId = "valSumModel";
+    Html.ValidationSummaryJQuery("Errores Encontrados", new Dictionary<string, object> { { "id", "valSumModel" }, { "class", "merror" } });
+    
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab1">Dato General</a></li>
+            <li><a href="#tab2">Contacto</a></li>
+            <li><a href="#tab3">Local</a></li>
+        </ul>
+        <div id="tab1">
+            <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+                @* <tr>
+                    <td style="height: 10px">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 10px">
+                    </td>
+                </tr>*@
+                <tr>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Nombre ")
+                        </div>
+                    </td>
+                    <td>
+                        @*  <input type="text" id="txtRazonsocial" class="textNormal" name="txtRazonsocial" />*@
+                        @Html.TextBoxFor(model => model.CLI_RazonSocial, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.CLI_RazonSocial)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <div class="label">
+                            @Html.Resource("Cliente,Ruc ")
+                        </div>
+                    </td>
+                    <td>
+                        @*  <input type="text" id="txtRuc"  name="txtRuc" class="textNormal" />*@
+                        @Html.TextBoxFor(model => model.CLI_RUC, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.CLI_RUC)
+                    </td>
+                    <td class="">
+                        <div class="label">
+                            @Html.Resource("Cliente,TelefonoOficina ")
+                        </div>
+                    </td>
+                    <td>
+                        @*    <input type="text" id="txtTelefonoOficina" class="textNormal"  name="txtTelefonoOficina"   />*@
+                        @Html.TextBoxFor(model => model.CLI_Telefono1, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.CLI_Telefono1)
+                    </td>
+                    <td class="">
+                        <div class="label">
+                            @Html.Resource("Cliente,AnexoOficina ")
+                        </div>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.CLI_AnexoOficina, new { @class = "textNormal" })
+                        @*    <input type="text" id="txtAnexoTelefonoPlanta" class="textNormal"  name="txtAnexoTelefonoPlanta"  />*@
+                        @Html.ValidationMessageFor(model => model.CLI_AnexoOficina)
+                    </td>
+                    <td class="">
+                        <div class="label">
+                            @Html.Resource("Cliente,TelefonoPlanta ")
+                        </div>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.CLI_Telefono2, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.CLI_Telefono2)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <div class="label">
+                            @Html.Resource("Cliente,AnexoPlanta ")
+                        </div>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ClI_AnexoPlanta, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.ClI_AnexoPlanta)
+                    </td>
+                    <td class="">
+                        <div class="label">
+                            @Html.Resource("Cliente,Fax ")
+                        </div>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.CLI_Fax, new { @class = "textNormal" })
+                        @*<input type="text" id="txtFax" class="textNormal"  name="txtFax"   />*@
+                        @Html.ValidationMessageFor(model => model.CLI_Fax)
+                    </td>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Email")
+                        </div>
+                    </td>
+                    <td>
+                        @*      <input type="text" id="txtCorreo" class="textNormal"  name="txtCorreo"   />*@
+                        @Html.TextBoxFor(model => model.CLI_Correo, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.CLI_Correo)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Direccion")
+                        </div>
+                    </td>
+                    <td>
+                        @* <input type="text" id="txtDireccion" class="textNormal"  name="txtDireccion"   />*@
+                        @Html.TextBoxFor(model => model.CLI_Direccion, new { @class = "textNormal" })
+                        @Html.ValidationMessageFor(model => model.CLI_Direccion)
+                    </td>
+                </tr>
+            </table>
+            <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+                <tr>
+                    <td>
+                        <fieldset style="width: 254px">
+                            <legend>Indicador Area</legend>
+                            <input type="radio" id="rbnAgri" name="rbnIndicador" />Agri
+                            <input type="radio" id="rbnHidro" name="rbnIndicador" />Hidro
+                            <input type="radio" id="rbnAmbos" name="rbnIndicador" />Ambos
+                        </fieldset>
+                    </td>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Observacion ")
+                        </div>
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.CLI_Observaciones, new { cols = "100%", rows = "2", @class = "inp-form" })
+                        @Html.ValidationMessageFor(model => model.CLI_Observaciones)
+                    </td>
+                </tr>
+            </table>
+            <p>
+            </p>
+            <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+                <tr>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Pais ")
+                        </div>
+                    </td>
+                    <td>
+                        <select id="ddlPais" name="ddlPais">
+                        </select>
+                    </td>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Departamento ")
+                        </div>
+                    </td>
+                    <td>
+                        <select id="ddlDepartamento" name="ddlDepartamento">
+                        </select>
+                    </td>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Provincia ")
+                        </div>
+                    </td>
+                    <td>
+                        <select id="ddlProvincia" name="ddlProvincia">
+                        </select>
+                    </td>
+                    <td class="right">
+                        <div class="label">
+                            @Html.Resource("Cliente,Distrito ")
+                        </div>
+                    </td>
+                    <td>
+                        <select id="ddlDistrito" name="ddlDistrito">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.HiddenFor(model => model.IDCliente)
+                        @Html.HiddenFor(model => model.Accion)
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+        </div>
+        <div id="tab2">
+            <div id="ventaContacto" style="display: none;">
+                <table border="0" cellpadding="0" cellspacing="0" class="tablelayout">
+                    <tr>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("Master,Nombre ")
+                            </div>
+                        </td>
+                        <td>
+                            @* @Html.TextBoxFor(model => model.ContactoCliente.COC_Nombres, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Nombres)*@
+                            <input type="text" id="txtNombreContacto" name="txtNombreContacto" class="textNormal" />
+                        </td>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("DireccionContacto,Apellido ")
+                            </div>
+                        </td>
+                        <td>
+                            @* @Html.TextBoxFor(model => model.ContactoCliente.COC_Apellidos, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Apellidos)*@
+                            <input type="text" id="txtApellidoContacto" name="txtApellidoContacto" class="textNormal" />
+                        </td>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("DireccionContacto,Cargo ")
+                            </div>
+                        </td>
+                        <td>
+                            @* @Html.TextBoxFor(model => model.ContactoCliente.COC_Cargo, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Cargo)*@
+                            <input type="text" id="txtCargoContacto" name="txtCargoContacto" class="textNormal" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("DireccionContacto,Telefono ")
+                            </div>
+                        </td>
+                        <td>
+                            @* @Html.TextBoxFor(model => model.ContactoCliente.COC_Telefono1, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Telefono1)*@
+                            <input type="text" id="txtTelefonoContacto" name="txtTelefonoContacto" class="textNormal" />
+                        </td>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("DireccionContacto,Celular ")
+                            </div>
+                        </td>
+                        <td>
+                            @* @Html.TextBoxFor(model => model.ContactoCliente.COC_Telefono2, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Telefono2)*@
+                            <input type="text" id="txtCelularContacto" name="txtCelularContacto" class="textNormal" />
+                        </td>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("DireccionContacto,Anexo ")
+                            </div>
+                        </td>
+                        <td>
+                            @*@Html.TextBoxFor(model => model.ContactoCliente.COC_Anexo, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Anexo)*@
+                            <input type="text" id="txtAnexoContacto" name="txtAnexoContacto" class="textNormal" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right">
+                            <div class="label">
+                                @Html.Resource("DireccionContacto,Email ")
+                            </div>
+                        </td>
+                        <td>
+                            @*@Html.TextBoxFor(model => model.ContactoCliente.COC_Anexo, new { @class = "textNormal" })
+                            @Html.ValidationMessageFor(model => model.ContactoCliente.COC_Anexo)*@
+                            <input type="text" id="txtCorreoContacto" name="txtCorreoContacto" class="textNormal" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <fieldset>
+                <legend>Ficha Contacto</legend>
+                <div align="right">
+                    <table class="ui-pg-table navtable">
+                        <tr>
+                            <td align="right">
+                                <input id="btnAgregarcontacto" type="button" class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix"
+                                    value="Nuevo" />
+                                <input id="btnModificarContacto" type="button" class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix"
+                                    value="Editar" />
+                                <input id="btnQuitarContacto" name="btnEliminarPersonal" type="button" value="Eliminar"
+                                    class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix" />&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="listado" style="padding: 10px; height: 90%; min-height: 400px;">
+                    <div id="gbox_tabla" class="ui-jqgrid ui-widget ui-widget-content ui-corner-all"
+                        dir="ltr" style="width: 850px;">
+                        <div id="gview_tabla" class="ui-jqgrid-view" style="width: 850px;">
+                            <div class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix">
+                                <span class="ui-jqgrid-title">Contacto</span>
+                            </div>
+                            <div class="ui-state-default ui-jqgrid-hdiv" style="width: 850px;">
+                                <div class="ui-jqgrid-hbox">
+                                    <table class="ui-jqgrid-htable" cellspacing="0" cellpadding="0" border="0" aria-labelledby="gbox_tabla"
+                                        style="width: 850px">
+                                        <thead>
+                                            <tr class="ui-jqgrid-labels">
+                                                <th id="tabla_rn" class="ui-state-default ui-th-column ui-th-ltr" style="width: 25px;">
+                                                    <div id="jqgh_tabla_rn">
+                                                    </div>
+                                                </th>
+                                                <th id="tabla_IDCliente" class="ui-state-default ui-th-column ui-th-ltr" style="width: 40px;
+                                                    display: none;">
+                                                </th>
+                                                <th id="tabla_OPcion" class="ui-state-default ui-th-column ui-th-ltr" style="width: 30px;">
+                                                    <span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">
+                                                    </span>
+                                                    <div id="jqgh_tabla_Opcion" class="ui-jqgrid-sortable">
+                                                        Select <span class="s-ico" style="display: none"><span class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr">
+                                                        </span><span class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr">
+                                                        </span></span>
+                                                    </div>
+                                                </th>
+                                                <th id="tabla_COC_Nombres" class="ui-state-default ui-th-column ui-th-ltr" style="width: 150px;">
+                                                    <span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">
+                                                    </span>
+                                                    <div id="jqgh_tabla_COC_Nombres" class="ui-jqgrid-sortable">
+                                                        Nombre <span class="s-ico" style="display: none"><span class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr">
+                                                        </span><span class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr">
+                                                        </span></span>
+                                                    </div>
+                                                </th>
+                                                <th id="tabla_COC_Apellidos" class="ui-state-default ui-th-column ui-th-ltr" style="width: 150px;">
+                                                    <span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">
+                                                    </span>
+                                                    <div id="jqgh_tabla_COC_Apellidosl" class="ui-jqgrid-sortable">
+                                                        Apellido <span class="s-ico" style="display: none"><span class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr">
+                                                        </span><span class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr">
+                                                        </span></span>
+                                                    </div>
+                                                </th>
+                                                <th id="tabla_COC_Cargo" class="ui-state-default ui-th-column ui-th-ltr" style="width: 100px;">
+                                                    <span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">
+                                                    </span>
+                                                    <div id="jqgh_tabla_COC_Cargo" class="ui-jqgrid-sortable">
+                                                        Cargo <span class="s-ico" style="display: none"><span class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr">
+                                                        </span><span class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr">
+                                                        </span></span>
+                                                    </div>
+                                                </th>
+                                                <th id="tabla_COC_Telefono1" class="ui-state-default ui-th-column ui-th-ltr" style="width: 80px;">
+                                                    <span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">
+                                                    </span>
+                                                    <div id="jqgh_tabla_COC_Telefono1" class="ui-jqgrid-sortable">
+                                                        Teléfono <span class="s-ico" style="display: none"><span class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr">
+                                                        </span><span class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr">
+                                                        </span></span>
+                                                    </div>
+                                                </th>
+                                                <th id="tabla_COC_Telefono2" class="ui-state-default ui-th-column ui-th-ltr" style="width: 80px;">
+                                                    <span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">
+                                                    </span>
+                                                    <div id="jqgh_tabla_COC_Telefono2" class="ui-jqgrid-sortable">
+                                                        Celular <span class="s-ico" style="display: none"><span class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr">
+                                                        </span><span class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr">
+                                                        </span></span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr class="ui-search-toolbar">
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                    </div>
+                                                </th>
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                        <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                        <input id="gs_CLI_RazonSocial" type="text" value="" name="CLI_RazonSocial" style="width: 95%;
+                                                            padding: 0px;" />
+                                                    </div>
+                                                </th>
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                        <input id="gs_CLI_Direccion" type="text" value="" name="CLI_Direccion" style="width: 95%;
+                                                            padding: 0px;" />
+                                                    </div>
+                                                </th>
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                    </div>
+                                                </th>
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                    </div>
+                                                </th>
+                                                <th class="ui-state-default ui-th-column ui-th-ltr">
+                                                    <div style="width: 100%; position: relative; height: 100%; padding-right: 0.3em;">
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbdContactoCliente">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div id="tab3">
+            no jodas
+        </div>
+    </div>
+  
+    <div>
+        <br />
+        <input type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+            value="Guardar" id="btnRegistrar" />
+        <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+            value="Cancelar" id="btnCancel" onclick="Cancelar()" />
+        <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+            value="Limpiar" id="btnLimpiar" onclick="Cancelar()" />
+    </div>
+    
+    
+}
+<div id='dialog-alert' style="display: none">
+</div>
+<div id='dialog-confirm' style="display: none">
+    ¿Está seguro de realizar esta operación?
+</div>
+<script type="text/javascript">
+
+    var grilla = 'tabla';
+    var resetFrm = false;
+    $(document).ready(function () {
+
+        // $("#tabs").tabs();
+        tabs();
+        activarIndicador();
+
+
+        BI.LoadDropDownListItems('ddlPais', '@Url.Action("Listar", "Pais")', 0, false, false);
+
+
+        var idCliente = '@ViewData["IDCliente"]';
+        if (idCliente != null && idCliente > 0) {
+            $('#hdnId').val(idCliente);
+            detalle($('#hdnId').val());
+        }
+
+
+        jQuery('#btnAgregarcontacto').click(function (e) {
+
+            ventanaContacto("Registrar Contacto", 0);
+        });
+
+
+        $("#ddlPais").change(function () {
+            BI.LoadDropDownListItems('ddlDepartamento', '@Url.Action("Listar", "Departamento")', { idPais: $("#ddlPais").val() });
+
+            if ($("#ddlPais").val() == "0") {
+                jQuery('#ddlDepartamento').attr('disabled', '-1');
+                jQuery('#ddlDepartamento').val('0');
+                jQuery('#ddlProvincia').attr('disabled', '-1');
+                jQuery('#ddlProvincia').val('0');
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+            }
+
+            if ($("#ddlDepartamento").val() == "0") {
+                jQuery('#ddlProvincia').attr('disabled', '-1');
+                jQuery('#ddlProvincia').val('0');
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+            }
+        });
+        $("#ddlDepartamento").change(function () {
+
+            BI.LoadDropDownListItems('ddlProvincia', '@Url.Action("Listar", "Provincia")', { idDepartamento: $("#ddlDepartamento").val() });
+            if ($("#ddlDepartamento").val() == "0") {
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+                jQuery('#ddlProvincia').attr('disabled', '-1');
+                jQuery('#ddlProvincia').val('0');
+            }
+
+            if ($("#ddlProvincia").val() == "0") {
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+            }
+
+        });
+        $("#ddlProvincia").change(function () {
+            BI.LoadDropDownListItems('ddlDistrito', '@Url.Action("Listar", "Distrito")', { idProvincia: $("#ddlProvincia").val() });
+            if ($("#ddlProvincia").val() == "0") {
+                jQuery('#ddlDistrito').attr('disabled', '-1');
+                jQuery('#ddlDistrito').val('0');
+
+            }
+
+        });
+
+
+
+        $.cookie("PANEL_IDX", "modulo" + '@Model.IdModulo');
+        $(".panelitems ul li a").trigger("click");
+       
+        var validator = $("#frmModel").data('validator');
+        validator.settings.ignore = "";
+        CrearDialogs();
+        $("#dialog-confirm").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 200,
+            width: 280,
+            title: 'alerta',
+            modal: true,
+            open: function () {
+                $(this).parent().appendTo($('#aspnetForm'));
+            },
+            buttons: [
+                        {
+                            text: 'Aceptar',
+                            click: function () {
+                                Guardar();
+                                //  registrar();
+                            }
+                        },
+                        {
+                            text: 'Cancelar',
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+        });
+
+        $(".msgModel .tips").hide();
+        $(".msgModel .merror, .msgModel .mexito, .msgModel .loading").css({ "border-top": "none" });
+        $("#frmModel .merror").css({ "border-top": "none", "border-left": "none", "border-right": "none" });
+        $('#btnRegistrar').bind("click", function (e) {
+            if (resetFrm)
+                $(".msgModel .tips").hide();
+            if ($("#frmModel").validate().form()) {
+                $("#dialog-confirm").dialog('open');
+            }
+            e.preventDefault();
+        });
+    });
+
+
+    function detalle(idCleinte) {
+
+        var provi = "";
+        var distri = "";
+        var id = idCleinte;
+        jQuery.ajax({
+            type: 'POST',
+            url: '@Url.Action("Detalle", "Cliente")',
+            data: ({
+                id: id
+            }),
+            async: false,
+            success: function (data) {
+                if (data.success == true) {
+                    var item = data.item;
+                    if (item != null) {
+
+
+                        if (item.IDPais > 0 && item.IDPais != null) {
+                            jQuery('#ddlPais').val(item.IDPais)
+                            BI.LoadDropDownListItems('ddlDepartamento', '@Url.Action("Listar", "Departamento")', { idPais: $("#ddlPais").val() });
+                            jQuery('#ddlDepartamento').val(item.IDDepartamento);
+                            BI.LoadDropDownListItems('ddlProvincia', '@Url.Action("Listar", "Provincia")', { idDepartamento: $("#ddlDepartamento").val() });
+                            jQuery('#ddlProvincia').val(item.IDProvincia);
+                            BI.LoadDropDownListItems('ddlDistrito', '@Url.Action("Listar", "Distrito")', { idProvincia: $("#ddlProvincia").val() });
+                            jQuery('#ddlDistrito').val(item.IDDistrito);
+
+                        }
+
+
+
+                        if (item.CLI_IndicadorArea == "M") {
+
+                            jQuery("#rbnAmbos").attr('checked', true);
+                        }
+                        if (item.CLI_IndicadorArea == "H") {
+                            jQuery("#rbnHidro").attr('checked', true);
+                        }
+                        if (item.CLI_IndicadorArea == "A") {
+
+                            jQuery("#rbnAgri").attr('checked', true);
+                        }
+                    }
+
+
+                }
+
+            },
+            error: function (data, error) {
+            }
+        });
+
+    }
+    var indicadorArea = '';
+
+    function Guardar() {
+
+
+
+        $("#dialog-confirm").dialog('close');
+        InicializarMsg();
+        var arrayCampos = {
+            IDCliente: $('#hdnId').val(),
+            Distrito: { IDDistrito: $("#ddlDistrito").val() },
+            CLI_IndicadorArea: indicadorArea,
+            Estado: '1'
+        };
+        $.post($("#frmModel").attr("action"), $("#frmModel").serialize() + '&camposJson=' + JSON.stringify(arrayCampos), function (response) {
+
+            if (response.Success) {
+                $(".msgModel .loading").slideUp(200, function () {
+                    $(".msgModel .mexito").html(response.Message);
+                    Intertek.ShowElement(".msgModel .mexito");
+                    if (response.Success == true) {
+
+                        $('#hdnId').val(response.Data);
+                    }
+                    //resetFrm = true;
+                });
+                // setTimeout('Cancelar()', 2000);
+            } else {
+                $(".msgModel .loading").slideUp(200, function () {
+                    $(".msgModel .merror").html(response.Message);
+                    Intertek.ShowElement(".msgModel .merror");
+                });
+                //  resetFrm = true;
+            }
+        });
+    }
+
+    function activarIndicador() {
+        var indicador = '';
+        jQuery("input[name='rbnIndicador']").live('click', function (e) {
+            var rdbId = jQuery(this).attr('id');
+            if (rdbId == "rbnAgri") {
+                if (jQuery('#' + rdbId).is(':checked')) {
+                    indicador = 'A';
+                }
+            }
+            if (rdbId == "rbnHidro") {
+                if (jQuery('#' + rdbId).is(':checked')) {
+                    indicador = 'H';
+                }
+            }
+            if (rdbId == "rbnAmbos") {
+                if (jQuery('#' + rdbId).is(':checked')) {
+                    indicador = 'M';
+                }
+            }
+            indicadorArea = indicador;
+            return indicadorArea;
+
+        });
+    }
+    function tabs() {
+        jQuery('#tabs').tabs({ selected: 0,
+            select: function (event, ui) {
+                if (ui.index != 0) {
+                    var id = $('#hdnId').val();
+
+                    if (id == 0) {
+                        alert("Debe guardar los datos del Cliente.", "Cliente");
+                        return false;
+                    }
+                    if (ui.index == 0) {
+                        $('#tab2').hide();
+                        $('#tab1').show();
+
+                    }
+
+                    if (ui.index == 1) {
+                        $('#tab1').hide();
+                          buscarContacto();
+                        $('#tab2').show();
+                      
+
+                    }
+
+                }
+            }
+        });
+        // jQuery('#tabs').unbind('tabsshow');
+
+    }
+
+
+    function InicializarMsg() {
+        $(".msgModel").show();
+        if ($(".msgModel .merror").is(":visible")) {
+            $(".msgModel .merror").slideUp(200, function () {
+                Intertek.ShowElement(".msgModel .loading");
+            });
+        } else
+            Intertek.ShowElement(".msgModel .loading");
+    }
+
+    function Cancelar() {
+
+        window.location = '@Url.Action("Index", "Cliente", new { area = "Administracion" })';
+    }
+
+    function CrearDialogs() {
+        var arrayDialog = [{ name: "dialog-alert", height: 100, width: 280, title: "Alerta"}];
+        Intertek.CreateDialogs(arrayDialog);
+    }
+
+
+
+
+
+    /*Ficha Contacto*/
+
+    function ventanaContacto(titulo, id) {
+
+        // borrar();
+        if (id > 0) {
+            //  detalle(id);
+        }
+        jQuery('#ventaContacto').dialog({
+            title: titulo,
+            width: 700,
+            modal: true,
+            resizable: false,
+            show: { effect: "blind", duration: 1000 },
+            hide: { effect: "explode", duration: 1000 },
+            buttons:
+				{
+				    "Guardar": function () {
+				        registrarContacto();
+				        buscarContacto();
+				        jQuery(this).dialog('close');
+				    },
+				    "Cancelar": function () {
+
+				        jQuery(this).dialog('close');
+				    }
+				}
+        });
+    }
+
+    function buscarContacto() {
+    var id = jQuery("#hdnId").val();
+    jQuery.ajax({
+        dataType: "json",
+        type: 'POST',
+         contentType: "application/json; charset=utf-8",
+         url: '@Url.Action("BuscarContacto", "Cliente")',
+        data: ({         
+            id: id
+        }),
+        success: function (response) {
+            var data = response.items;
+            // console.log( data);
+            var items = '';
+            if (data != null) {
+                for (var j = 0; j < data.length; j++) {
+                    items += '<tr class="jqgfirstrow">';
+                    items += '<td class="ui-state-default jqgrid-rownum" aria-describedby="tabla_rn" style="text-align:center;width: 25px;">' + (j + 1) + '</td>';
+                    items += '<td><input  type="radio" class="td"  id = "' + data[j].Id + '" value ="' + data[j].Id + '" /></td>';
+                    items += '<td clas="ui-state-default ui-th-column ui-th-ltr">' + data[j].COC_Nombres + '</td>';
+                    items += '<td clas="ui-state-default ui-th-column ui-th-ltr">' + data[j].COC_Apellidos + '</td>';
+                    items += '<td clas="ui-state-default ui-th-column ui-th-ltr">' + data[j].COC_Cargo + '</td>';
+                      items += '<td clas="ui-state-default ui-th-column ui-th-ltr">' + data[j].COC_Telefono1 + '</td>';
+                      items += '<td clas="ui-state-default ui-th-column ui-th-ltr">' + data[j].COC_Telefono2 + '</td>';
+               
+  
+                    items += '</tr>';
+
+                }
+                jQuery('#tbdContactoCliente').html(items);
+            
+            }
+
+        }
+      
+    });
+}
+   
+
+   function registrarContacto() {
+   var item={
+            IDContactoCliente: jQuery('#hdnIdContacto').val(), 
+            IDCliente: jQuery('#hdnId').val(),
+            COC_Nombres: jQuery('#txtNombreContacto').val(),
+            COC_Apellidos: jQuery('#txtApellidoContacto').val(),
+            COC_Cargo: jQuery('#txtCargoContacto').val(),
+            COC_Telefono1: jQuery('#txtTelefonoContacto').val(),
+            COC_Telefono2: jQuery('#txtCelularContacto').val(),           
+            COC_Email: jQuery('#txtCorreoContacto').val(),
+            COC_Anexo: jQuery('#txtAnexoContacto').val()
+   
+   }; 
+    jQuery.ajax({
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: '@Url.Action("RegistrarContacto", "Cliente")',
+         data:JSON.stringify(item),
+          success: function (data) {
+            if (data.success == true) {
+              //  alert(data.message, "Cliente");
+              //  jQuery('#frmCliente').dialog('close');
+              //  buscar();
+            }
+            else {
+               // alert(data.message, "Cliente");
+            }
+        }
+
+    });
+}
+
+
+</script>

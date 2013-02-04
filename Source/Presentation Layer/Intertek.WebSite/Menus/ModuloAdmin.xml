@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Modulos>
+  <Modulo>
+    <IdModulo>01</IdModulo>
+    <Nombre>Mantenimiento</Nombre>
+  </Modulo>
+  <Modulo>
+    <IdModulo>02</IdModulo>
+    <Nombre>Operaciones</Nombre>
+  </Modulo>
+  <Modulo>
+    <IdModulo>03</IdModulo>
+    <Nombre>Reportes</Nombre>
+  </Modulo>
+</Modulos>

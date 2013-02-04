@@ -1,0 +1,22 @@
+﻿@if (Request.IsAuthenticated)
+{
+
+    <text>¡Hola <strong>@User.Identity.Name</strong>! [ <a style="color: whitesmoke;text-shadow:1px 1px 1px #292222" href='@Url.Action("LogOff", "Account", new { Area = "" })' onclick=" javascript:return confirm('¿Estás seguro de Salir del Sistema?'); ">
+        <b> Cerrar Sesión</b></a> ]</text>
+
+    <a  style="color: whitesmoke;text-shadow:1px 1px 1px #292222" href='@Url.Action("ChangePassword", "Account", new { Area = "" })'>
+        [<b>Cambiar Contraseña</b> ]</a>
+
+    <a  style="color: whitesmoke;text-shadow:1px 1px 1px #292222" href='@Utils.RelativeWebRoot'>
+        [<b>Ir a Inicio </b>]</a>
+    <div style="padding-top:5px;">
+            <a href="@string.Format("{0}Administracion/Panel?culture=es",@Utils.AbsoluteWebRoot)" ><img src="@Url.Content("~/Content/img/espanol.png")" style="" alt="Español" /></a>
+            <a href="@string.Format("{0}Administracion/Panel?culture=en",@Utils.AbsoluteWebRoot)" ><img src="@Url.Content("~/Content/img/ingles.png")" style="" alt="English" /></a>
+            <span></span>
+    </div>
+
+}
+else
+{
+    @:[ @Html.ActionLink("Log On", "LogOn", "Account", null, new { @style = "color:white;" })]
+}

@@ -1,0 +1,17 @@
+﻿.label{ font-family:Verdana, Geneva, sans-serif; color:#003976; font-size:12px; margin:0px; font-weight:normal; margin-top:3px; margin-left:0px; margin-left:4px;}
+
+.text{ font-family:Verdana, Geneva, sans-serif; color:#003976; font-size:12px; margin:0px; font-weight:normal; margin-top:3px; margin-left:8px; width:800px;}
+.textNormal{ font-family:Verdana, Geneva, sans-serif; color:#003976; font-size:12px; margin:0px; font-weight:normal; margin-top:3px; margin-left:8px; width:150px;}
+
+.td{
+
+  border-bottom-color : inherit;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    font-weight: normal;
+    height: 22px;
+    overflow: hidden;
+    padding: 0 2px;
+    white-space: pre;
+
+}
